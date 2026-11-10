@@ -1,5 +1,6 @@
 package be.abis.sos.test;
 
+import be.abis.sos.enumeration.Language;
 import be.abis.sos.enumeration.SandwichType;
 import be.abis.sos.model.Ingredient;
 import be.abis.sos.model.Sandwich;
@@ -14,6 +15,7 @@ public class TestSandwich {
         Ingredient i2 = new Ingredient("Kaas", "Fromage");
         Sandwich s1 = new Sandwich("Sandwich 1 NL", "Sandwich 1 FR", SandwichType.SANDWICH_TYPE_FISH, 5.0);
         Sandwich s2 = new Sandwich("Sandwich 2 NL", "Sandwich 2 FR", SandwichType.SANDWICH_TYPE_MEAT, 5.5);
+        Sandwich s3 = new Sandwich("Sandwich 3 NL", "Sandwich 3 FR", SandwichType.SANDWICH_TYPE_SPECIAL, 5.5);
 
         s1.addIngredient(i1);
         s2.addIngredients(i1,i2);
@@ -24,6 +26,10 @@ public class TestSandwich {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        System.out.println(s1.toFileString());
+
+        System.out.println(s2.toString(Language.LANGUAGE_FRENCH));
 
     }
 }

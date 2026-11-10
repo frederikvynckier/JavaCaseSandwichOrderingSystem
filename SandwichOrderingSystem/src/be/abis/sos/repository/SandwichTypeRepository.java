@@ -14,8 +14,8 @@ public class SandwichTypeRepository {
         sandwichTypes.add(SandwichType.SANDWICH_TYPE_MEAT);
         sandwichTypes.add(SandwichType.SANDWICH_TYPE_CHEESE);
         sandwichTypes.add(SandwichType.SANDWICH_TYPE_FISH);
-        sandwichTypes.add(SandwichType.SANDWICH_TYPE_CHEESE);
-        sandwichTypes.add(SandwichType.SANDWICH_TYPE_MEAT);
+        sandwichTypes.add(SandwichType.SANDWICH_TYPE_SPECIAL);
+        sandwichTypes.add(SandwichType.SANDWICH_TYPE_VEGE);
     }
 
     public List<SandwichType> getSandwichTypes() {

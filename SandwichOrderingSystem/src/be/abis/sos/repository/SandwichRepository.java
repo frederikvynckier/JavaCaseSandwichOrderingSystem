@@ -2,7 +2,7 @@ package be.abis.sos.repository;
 
 import be.abis.sos.exception.SandwichParseException;
 import be.abis.sos.model.Sandwich;
-import be.abis.sos.utils.SandwichUtils;
+import be.abis.sos.utils.SandwichParser;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -38,11 +38,11 @@ public class SandwichRepository {
                 if (!nextLine.trim().isBlank()) {
                     System.out.println(nextLine);
                     try {
-                        sandwich = SandwichUtils.parseSandwich(nextLine);
+                        sandwich = SandwichParser.parse(nextLine);
+                        sandwiches.add(sandwich);
                     } catch (SandwichParseException e) {
                         System.out.println(e.getMessage());
                     }
-                    //sandwiches.add(new Sandwich(nextLine));
                 }
             }
             in.close();
@@ -54,8 +54,8 @@ public class SandwichRepository {
 
     public void writeSandwiches() throws IOException {
         try (PrintWriter pw = new PrintWriter(new FileWriter(getFilePath().toFile()))) {
-            for (Sandwich c : sandwiches) {
-                //pw.println(c.getName());
+            for (Sandwich s : sandwiches) {
+                pw.println(s.toFileString());
             }
         } catch (IOException ioex) {
             System.out.println(ioex.getMessage());
