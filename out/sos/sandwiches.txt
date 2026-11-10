@@ -8,3 +8,5 @@
 4;Hawai (ananas,hesp,kaas,coctailsaus);Hawai (ananas,jambon,fromage,sauce cocktail);0.00
 5;Maya (rucola,brie,honing,perzik);Maya (roquette,brie,miel,pêche);0.00
 5;Broodje geitenkaas (geitenkaas,honing,walnoten,rucola);Sandwich au fromage de chèvre (fromage de chêvre,miel,noix,roquette);0.00
+3;Sandwich 1 NL (Ei);Sandwich 1 FR (Oeuf);0.05
+1;Sandwich 2 NL (Ei,Kaas);Sandwich 2 FR (Oeuf,Fromage);0.06

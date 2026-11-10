@@ -23,6 +23,13 @@ public class SandwichRepository {
     }
 
     public List<Sandwich> getSandwiches() {
+        if (sandwiches.isEmpty()) {
+            try {
+                readSandwiches();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         return sandwiches;
     }
 
