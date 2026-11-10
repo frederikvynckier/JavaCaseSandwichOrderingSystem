@@ -1,10 +1,10 @@
-1;Hesp;Jambon;3.5
-1;Rosbief;Rosbif;4.0
-2;Hollandse kaas;Fromage hollandais;3.5
-2;Brie;Brie;4.0
-3;Garnaalsla;Salade de crevettes;5.5
-3;Tonijnsla;Salade de thon;5.0
-4;Pinky (sla,tomaat,ei,haringfilet,tartaar);Pinky (salade,tomate,oeuf,filet de hareng, sauce tartare);5.0
-4;Hawai (ananas,hesp,kaas,coctailsaus);Hawai (ananas,jambon,fromage,sauce cocktail);5.0
-5;Maya (rucola,brie,honing,perzik);Maya (roquette,brie,miel,pêche);4.5
-5;Broodje geitenkaas (geitenkaas,honing,walnoten,rucola);Sandwich au fromage de chèvre (fromage de chêvre,miel,noix,roquette);5.0
+1;Hesp;Jambon;0.00
+1;Rosbief;Rosbif;0.00
+2;Hollandse kaas;Fromage hollandais;0.00
+2;Brie;Brie;0.00
+3;Garnaalsla;Salade de crevettes;0.00
+3;Tonijnsla;Salade de thon;0.00
+4;Pinky (sla,tomaat,ei,haringfilet,tartaar);Pinky (salade,tomate,oeuf,filet de hareng,sauce tartare);0.00
+4;Hawai (ananas,hesp,kaas,coctailsaus);Hawai (ananas,jambon,fromage,sauce cocktail);0.00
+5;Maya (rucola,brie,honing,perzik);Maya (roquette,brie,miel,pêche);0.00
+5;Broodje geitenkaas (geitenkaas,honing,walnoten,rucola);Sandwich au fromage de chèvre (fromage de chêvre,miel,noix,roquette);0.00

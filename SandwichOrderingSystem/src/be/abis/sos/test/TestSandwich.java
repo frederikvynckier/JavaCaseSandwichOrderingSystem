@@ -23,6 +23,8 @@ public class TestSandwich {
         SandwichRepository sr = new SandwichRepository();
         try {
             sr.readSandwiches();
+            sr.addSandwich(s1);
+            sr.addSandwich(s2);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -30,6 +32,12 @@ public class TestSandwich {
         System.out.println(s1.toFileString());
 
         System.out.println(s2.toString(Language.LANGUAGE_FRENCH));
+
+        try {
+            sr.writeSandwiches();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 }

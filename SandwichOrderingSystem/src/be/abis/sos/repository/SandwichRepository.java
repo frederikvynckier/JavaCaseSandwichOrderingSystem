@@ -30,6 +30,14 @@ public class SandwichRepository {
         this.sandwiches = sandwiches;
     }
 
+    public void addSandwich(Sandwich sandwich) {
+        sandwiches.add(sandwich);
+    }
+
+    public void removeSandwich(Sandwich sandwich) {
+        sandwiches.remove(sandwich);
+    }
+
     public void readSandwiches() throws IOException {
         try (BufferedReader in = new BufferedReader(new FileReader(getFilePath().toFile()))) {
             String nextLine;
@@ -55,8 +63,10 @@ public class SandwichRepository {
     public void writeSandwiches() throws IOException {
         try (PrintWriter pw = new PrintWriter(new FileWriter(getFilePath().toFile()))) {
             for (Sandwich s : sandwiches) {
+                System.out.println("Output : " + s.toFileString());
                 pw.println(s.toFileString());
             }
+            System.out.println("Write successfull");
         } catch (IOException ioex) {
             System.out.println(ioex.getMessage());
         }
