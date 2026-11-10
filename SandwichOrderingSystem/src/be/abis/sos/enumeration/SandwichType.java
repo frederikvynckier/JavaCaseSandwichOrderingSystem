@@ -1,6 +1,8 @@
 package be.abis.sos.enumeration;
 
-public enum SandwichType {
+import be.abis.sos.model.Sandwich;
+
+public enum SandwichType implements Comparable<SandwichType>{
 
     SANDWICH_TYPE_MEAT (1,"Vlees", "Viande", true),
     SANDWICH_TYPE_CHEESE (2, "Kaas", "Fromage", true),
@@ -35,4 +37,5 @@ public enum SandwichType {
     public boolean isVegetablesPossible() {
         return vegetablesPossible;
     }
+
 }

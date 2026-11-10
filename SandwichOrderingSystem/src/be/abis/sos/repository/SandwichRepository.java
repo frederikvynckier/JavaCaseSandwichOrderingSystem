@@ -22,7 +22,7 @@ public class SandwichRepository {
     public SandwichRepository() {
     }
 
-    public List<Sandwich> getCompanies() {
+    public List<Sandwich> getSandwiches() {
         return sandwiches;
     }
 

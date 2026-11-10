@@ -6,10 +6,11 @@ import be.abis.sos.exception.IngredientNotFoundException;
 import be.abis.sos.utils.NumberUtils;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Sandwich {
+public class Sandwich implements Comparable<Sandwich> {
 
     private String nameDutch;
     private String nameFrench;
@@ -140,4 +141,19 @@ public class Sandwich {
         return String.valueOf(sandwichType.getId()) + ";" + stringDutch + ";" + stringFrench + ";" + NumberUtils.formatNumber(price);
     }
 
+    @Override
+    public int compareTo(Sandwich o) {
+        return (this.sandwichType.compareTo(o.sandwichType)) ;
+    }
+
+    public static class SandwichPricePerTypeComparator implements Comparator<Sandwich> {
+
+        public int compare(Sandwich s1, Sandwich s2) {
+
+            int compare = s1.getSandwichType().compareTo(s2.getSandwichType());
+            if (compare == 0) {
+                return (s1.getPrice() < s2.getPrice() ? -1 : s1.getPrice() == s2.getPrice() ? 0 : 1);
+            } else return compare;
+        }
+    }
 }
