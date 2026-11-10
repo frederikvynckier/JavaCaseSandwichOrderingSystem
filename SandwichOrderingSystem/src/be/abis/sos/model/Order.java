@@ -75,5 +75,10 @@ public class Order {
     public void setRemarks(String remarks) {
         this.remarks = remarks;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" + "id=" + id + ", person=" + person
+ + ", session=" + session + ", date=" + date + ", remarks=" + remarks + '}';    }
 }
 
