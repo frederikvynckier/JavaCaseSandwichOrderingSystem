@@ -1,5 +1,6 @@
 package be.abis.sos.repository;
 
+import be.abis.sos.enumeration.Language;
 import be.abis.sos.enumeration.SandwichType;
 import be.abis.sos.exception.SandwichTypeNotFoundException;
 
@@ -31,5 +32,11 @@ public class SandwichTypeRepository {
         }
         if (foundSandwichType==null) throw new SandwichTypeNotFoundException("SandwichType " + id + " can not be found.");
         return foundSandwichType;
+    }
+
+    public void printSandwichTypes(Language language) {
+        for (SandwichType s:sandwichTypes){
+            System.out.println(s.getId() + ". " + s.toString(language));
+        }
     }
 }

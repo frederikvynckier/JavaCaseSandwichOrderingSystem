@@ -1,6 +1,9 @@
 package be.abis.sos.enumeration;
 
+import be.abis.sos.model.Ingredient;
 import be.abis.sos.model.Sandwich;
+
+import java.util.stream.Collectors;
 
 public enum SandwichType implements Comparable<SandwichType>{
 
@@ -38,4 +41,15 @@ public enum SandwichType implements Comparable<SandwichType>{
         return vegetablesPossible;
     }
 
+    public String toString(Language language) {
+        switch (language) {
+            case LANGUAGE_DUTCH:
+                return nameDutch;
+            case LANGUAGE_FRENCH:
+                return nameFrench;
+            default:
+                return "Language not supported";
+        }
+    }
 }
+

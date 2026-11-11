@@ -98,19 +98,19 @@ public class Sandwich implements Comparable<Sandwich> {
 
     public String toString(Language language) {
 
-        String name = "";
+        String name = sandwichType.toString(language).toUpperCase() + " - " ;
         String ingredientsList = "";
 
         switch (language) {
             case LANGUAGE_DUTCH:
-                name = nameDutch;
+                name +=  nameDutch;
                 if (!ingredients.isEmpty()) {
                     ingredientsList = ingredients.stream().map(Ingredient::getNameDutch).collect(Collectors.joining(","));
                     name += " (" + ingredientsList + ")";
                 }
                 break;
             case LANGUAGE_FRENCH:
-                name = nameFrench;
+                name += nameFrench;
                 if (!ingredients.isEmpty()) {
                     ingredientsList = ingredients.stream().map(Ingredient::getNameFrench).collect(Collectors.joining(","));
                     name += " (" + ingredientsList + ")";
@@ -119,6 +119,8 @@ public class Sandwich implements Comparable<Sandwich> {
             default:
                 return "Language not supported";
         }
+
+        name += " - " + NumberUtils.formatNumber(price);
 
         return name;
 
