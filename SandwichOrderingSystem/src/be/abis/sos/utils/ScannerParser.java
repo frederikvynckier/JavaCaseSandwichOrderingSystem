@@ -1,8 +1,13 @@
 package be.abis.sos.utils;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class ScannerParser {
+
+    static String baseName = "be.abis.sos.translations";
+    static ResourceBundle bundle = ResourceBundle.getBundle(baseName);
 
     public static int readInt(Scanner scanner, String message) {
 
@@ -15,7 +20,7 @@ public class ScannerParser {
             try {
                 return Integer.parseInt(input);
             } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid number");
+                System.out.println(bundle.getString("number.valid"));
             }
         }
     }
@@ -34,7 +39,7 @@ public class ScannerParser {
                     return i;
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid number");
+                System.out.println(bundle.getString("number.valid"));
             }
         }
 
@@ -53,7 +58,7 @@ public class ScannerParser {
                 return input;
             }
 
-            System.out.println("Value cannot be empty.");
+            System.out.println(bundle.getString("string.empty"));
         }
 
     }
@@ -70,7 +75,7 @@ public class ScannerParser {
             try {
                 return Double.parseDouble(input);
             } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid number");
+                System.out.println(bundle.getString("number.valid"));
             }
         }
     }
@@ -82,14 +87,14 @@ public class ScannerParser {
                 message = message.replace("?", "");
             }
 
-            System.out.println(message + " (Y/N)?");
+            System.out.println(message + " " + bundle.getString("boolean.choices") + "?");
 
             String input = scanner.nextLine().trim();
 
-            if (input.equalsIgnoreCase("y")) return true;
-            if (input.equalsIgnoreCase("n")) return false;
+            if (input.equalsIgnoreCase(bundle.getString("boolean.yes"))) return true;
+            if (input.equalsIgnoreCase(bundle.getString("boolean.no"))) return false;
 
-            System.out.println("Please only use Y/N");
+            System.out.println(bundle.getString("boolean.valid"));
         }
 
     }

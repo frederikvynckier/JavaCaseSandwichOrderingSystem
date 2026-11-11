@@ -51,7 +51,6 @@ public class SandwichRepository {
             Sandwich sandwich;
             while ((nextLine = in.readLine()) != null) {
                 if (!nextLine.trim().isBlank()) {
-                    System.out.println(nextLine);
                     try {
                         sandwich = SandwichParser.parse(nextLine);
                         sandwiches.add(sandwich);

@@ -8,9 +8,7 @@ import be.abis.sos.repository.SandwichTypeRepository;
 import be.abis.sos.service.SandwichService;
 import be.abis.sos.utils.ScannerParser;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class OrderManagerUI {
     public static void main(String[] args) {
@@ -20,63 +18,69 @@ public class OrderManagerUI {
         // 1. Select language
         String message = "Please select your language\n1. Dutch\n2. French";
         int choice = ScannerParser.readInt(scanner, message, 1, 2);
-        Language language = null;
-        switch (choice) {
-            case 1: language = Language.LANGUAGE_DUTCH; break;
-            case 2: language = Language.LANGUAGE_FRENCH; break;
-        }
+        Language language = switch (choice) {
+            case 1 -> Language.LANGUAGE_DUTCH;
+            case 2 -> Language.LANGUAGE_FRENCH;
+            default -> throw new IllegalArgumentException("Invalid choice");
+        };
+
+        Locale.setDefault(language.getLocale());
+
+        String baseName = "be.abis.sos.translations";
+        ResourceBundle bundle = ResourceBundle.getBundle(baseName);
 
         // 2. Display all sandwiches
         SandwichService ss = new SandwichService();
-        listSandwiches(ss, language);
-        // 3. Select action
+        listSandwiches(ss, language, bundle);
 
-        message = "What do you want to do\n1. Add a new sandwich\n2. Update the price of a sandwich\n3. Remove a sandwich\n4. List sandwiches\n5. Stop";
-        choice = ScannerParser.readInt(scanner, message, 1, 5);
-        switch (choice) {
-            case 1: addSandwich(scanner, ss, language); break;
-            case 2: updateSandwich(scanner, ss, language); break;
-            case 3: removeSandwich(scanner, ss, language); break;
-            case 4: listSandwiches(ss, language); break;
-            case 5: scanner.close(); return;
+        // 3. Select action
+        while (true) {
+            choice = ScannerParser.readInt(scanner, bundle.getString("sandwich.actions"), 1, 5);
+            switch (choice) {
+                case 1: addSandwich(scanner, ss, language, bundle); break;
+                case 2: updateSandwich(scanner, ss, language, bundle); break;
+                case 3: removeSandwich(scanner, ss, language, bundle); break;
+                case 4: listSandwiches(ss, language, bundle); break;
+                case 5: scanner.close();return;
+            }
         }
     }
 
-    private static void listSandwiches(SandwichService ss, Language language) {
+    private static void listSandwiches(SandwichService ss, Language language, ResourceBundle bundle) {
 
         String seperator = "*".repeat(100);
-        System.out.println("LIST OF AVAILABLE SANDWICHES");
+        System.out.println(bundle.getString("sandwich.list"));
         System.out.println(seperator);
         ss.printAllSandwichesByTypeAndPrice(language);
         System.out.println(seperator);
     }
 
-    private static void addSandwich(Scanner scanner, SandwichService ss, Language language) {
+    private static void addSandwich(Scanner scanner, SandwichService ss, Language language, ResourceBundle bundle) {
 
         SandwichTypeRepository str =  new SandwichTypeRepository();
-        System.out.println("Which type of sandwich do you want to add?");
+        System.out.println(bundle.getString("sandwich.add.type"));
         str.printSandwichTypes(language);
         int id = ScannerParser.readInt(scanner,"", 1, str.getSandwichTypes().size());
         SandwichType sandwichType = str.findSandwichType(id);
 
-        String nameDutch = ScannerParser.readNonEmptyString(scanner, "Please enter the dutch name of the sandwich");
-        String nameFrench = ScannerParser.readNonEmptyString(scanner, "Please enter the dutch name of the sandwich");
+        String nameDutch = ScannerParser.readNonEmptyString(scanner, bundle.getString("sandwich.add.namenl"));
+        String nameFrench = ScannerParser.readNonEmptyString(scanner, bundle.getString("sandwich.add.namefr"));
 
-        List<Ingredient> ingredients = new ArrayList<Ingredient>();
-        if (ScannerParser.readBoolean(scanner, "Do you want to add ingredients")) {
+        List<Ingredient> ingredients = new ArrayList<>();
+        if (ScannerParser.readBoolean(scanner, bundle.getString("sandwich.add.ingredients"))) {
             boolean addMoreIngredients = true;
             while (addMoreIngredients) {
-                String ingredientDutch = ScannerParser.readNonEmptyString(scanner, "Please enter the dutch name of the ingredient");
-                String ingredientFrench = ScannerParser.readNonEmptyString(scanner, "Please enter the french name of the ingredient");
+                String ingredientDutch = ScannerParser.readNonEmptyString(scanner, bundle.getString("ingredient.add.namenl"));
+                String ingredientFrench = ScannerParser.readNonEmptyString(scanner, bundle.getString("ingredient.add.namefr"));
                 ingredients.add(new Ingredient(ingredientDutch, ingredientFrench));
-                addMoreIngredients = ScannerParser.readBoolean(scanner, "Do you want to add more ingredients");
+                addMoreIngredients = ScannerParser.readBoolean(scanner, bundle.getString("ingredient.add.another"));
             }
         }
 
-        double price = ScannerParser.readDouble(scanner, "Please enter the price of the sandwich");
+        double price = ScannerParser.readDouble(scanner, bundle.getString("sandwich.add.price"));
 
         Sandwich sandwich;
-        if (ingredients.size() == 0) {
+        if (ingredients.isEmpty()) {
             sandwich = new Sandwich(nameDutch, nameFrench, sandwichType, price  );
         } else {
             sandwich = new Sandwich(nameDutch, nameFrench,  ingredients, sandwichType, price  );
@@ -89,18 +93,18 @@ public class OrderManagerUI {
         }
     }
 
-    private static void updateSandwich(Scanner scanner, SandwichService ss, Language language) {
-        int i = ScannerParser.readInt(scanner, "Please enter the number of the sandwich");
+    private static void updateSandwich(Scanner scanner, SandwichService ss, Language language, ResourceBundle bundle) {
+        int i = ScannerParser.readInt(scanner, bundle.getString("sandwich.select"));
         Sandwich sandwich = ss.findSandwichById(i);
         System.out.println(sandwich.toString(language));
         double price = ScannerParser.readDouble(scanner, "Please enter the new price of the sandwich");
         sandwich.setPrice(price);
     }
 
-    private static void removeSandwich(Scanner scanner, SandwichService ss, Language language) {
-        int i = ScannerParser.readInt(scanner, "Please enter the number of the sandwich");
+    private static void removeSandwich(Scanner scanner, SandwichService ss, Language language, ResourceBundle bundle) {
+        int i = ScannerParser.readInt(scanner, bundle.getString("sandwich.select"));
         Sandwich sandwich = ss.findSandwichById(i);
-
+        System.out.println(sandwich.toString(language));
         boolean b =  ScannerParser.readBoolean(scanner, "Are you sure you want to remove this sandwich");
         if (b) {
             ss.removeSandwich(sandwich);
