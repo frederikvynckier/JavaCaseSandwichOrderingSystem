@@ -1,5 +1,7 @@
 package be.abis.sos.utils;
 
+import be.abis.sos.enumeration.Language;
+
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -8,6 +10,11 @@ public class ScannerParser {
 
     static String baseName = "be.abis.sos.translations";
     static ResourceBundle bundle = ResourceBundle.getBundle(baseName);
+
+    public static void setLanguage(Language language) {
+
+        bundle = ResourceBundle.getBundle(baseName, language.getLocale());
+    }
 
     public static int readInt(Scanner scanner, String message) {
 
