@@ -1,6 +1,9 @@
 package be.abis.sos.repository;
 
+import be.abis.sos.enumeration.Language;
+import be.abis.sos.exception.SandwichNotFoundException;
 import be.abis.sos.exception.SandwichParseException;
+import be.abis.sos.model.Person;
 import be.abis.sos.model.Sandwich;
 import be.abis.sos.utils.SandwichParser;
 
@@ -43,6 +46,13 @@ public class SandwichRepository {
 
     public void removeSandwich(Sandwich sandwich) {
         sandwiches.remove(sandwich);
+    }
+
+    public Sandwich findSandwichById(int id) throws SandwichParseException {
+
+            return sandwiches.stream()
+                    .filter(s ->(s.getSandwichId()== id))
+                    .findFirst().orElseThrow(() -> new SandwichNotFoundException("No sandwich found with id " + id));
     }
 
     public void readSandwiches() throws IOException {

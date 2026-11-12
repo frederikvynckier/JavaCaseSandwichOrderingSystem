@@ -12,6 +12,9 @@ import java.util.stream.Collectors;
 
 public class Sandwich implements Comparable<Sandwich> {
 
+    public static int counter = 0;
+
+    private int sandwichId;
     private String nameDutch;
     private String nameFrench;
     private List<Ingredient> ingredients = new ArrayList<>();
@@ -19,6 +22,7 @@ public class Sandwich implements Comparable<Sandwich> {
     private double price;
 
     public Sandwich(String nameDutch, String nameFrench, SandwichType sandwichType, double price) {
+        this.sandwichId = ++counter;
         this.nameDutch = nameDutch;
         this.nameFrench = nameFrench;
         this.sandwichType = sandwichType;
@@ -26,11 +30,12 @@ public class Sandwich implements Comparable<Sandwich> {
     }
 
     public Sandwich(String nameDutch, String nameFrench, List<Ingredient> ingredients, SandwichType sandwichType, double price) {
-        this.nameDutch = nameDutch;
-        this.nameFrench = nameFrench;
+        this(nameDutch, nameFrench, sandwichType, price);
         this.ingredients = ingredients;
-        this.sandwichType = sandwichType;
-        this.price = price;
+    }
+
+    public int getSandwichId() {
+        return sandwichId;
     }
 
     public String getNameDutch() {
@@ -98,19 +103,19 @@ public class Sandwich implements Comparable<Sandwich> {
 
     public String toString(Language language) {
 
-        String name = sandwichType.toString(language).toUpperCase() + " - " ;
+        String name;
         String ingredientsList = "";
 
         switch (language) {
             case LANGUAGE_DUTCH:
-                name +=  nameDutch;
+                name =  nameDutch;
                 if (!ingredients.isEmpty()) {
                     ingredientsList = ingredients.stream().map(Ingredient::getNameDutch).collect(Collectors.joining(","));
                     name += " (" + ingredientsList + ")";
                 }
                 break;
             case LANGUAGE_FRENCH:
-                name += nameFrench;
+                name = nameFrench;
                 if (!ingredients.isEmpty()) {
                     ingredientsList = ingredients.stream().map(Ingredient::getNameFrench).collect(Collectors.joining(","));
                     name += " (" + ingredientsList + ")";
@@ -120,10 +125,7 @@ public class Sandwich implements Comparable<Sandwich> {
                 return "Language not supported";
         }
 
-        name += " - " + NumberUtils.formatNumber(price);
-
-        return name;
-
+        return String.format("%-25s %-60s %8s %7s", sandwichType.toString(language).toUpperCase(), name, NumberUtils.formatNumber(price), "(" + sandwichId + ")");
     }
 
     public String toFileString() {
@@ -140,7 +142,7 @@ public class Sandwich implements Comparable<Sandwich> {
             stringFrench += " (" + ingredientsFrench + ")";
         }
 
-        return String.valueOf(sandwichType.getId()) + ";" + stringDutch + ";" + stringFrench + ";" + NumberUtils.formatNumber(price);
+        return String.valueOf(sandwichType.getId()) + ";" + stringDutch + ";" + stringFrench + ";" + price;
     }
 
     @Override

@@ -4,8 +4,11 @@ import be.abis.sos.enumeration.Language;
 import be.abis.sos.model.Sandwich;
 import be.abis.sos.repository.SandwichRepository;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class SandwichService {
 
@@ -18,17 +21,28 @@ public class SandwichService {
     }
 
     public void printAllSandwichesByTypeAndPrice(Language language) {
-        List<Sandwich> sandwiches = sortAllSandwichesByTypeAndPrice();
-        int i = 0;
-        for (Sandwich sandwich : sandwiches) {
-            i++;
-            System.out.println(i + ". " + sandwich.toString(language));
+
+        String baseName = "be.abis.sos.translations";
+        ResourceBundle bundle = ResourceBundle.getBundle(baseName, language.getLocale());
+
+        String seperator = "*".repeat(103);
+        System.out.println(bundle.getString("sandwich.list"));
+        System.out.println(seperator);
+        sortAllSandwichesByTypeAndPrice().forEach(s -> System.out.println(s.toString(language)));
+        System.out.println(seperator);
+    }
+
+    public void saveSandwiches() {
+
+        try {
+            sr.writeSandwiches();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
     public Sandwich findSandwichById(int id) {
-        List<Sandwich> sandwiches = sortAllSandwichesByTypeAndPrice();
-        Sandwich sandwich = sandwiches.get(id+1);
+        Sandwich sandwich = sr.findSandwichById(id);
         return sandwich;
     }
 
