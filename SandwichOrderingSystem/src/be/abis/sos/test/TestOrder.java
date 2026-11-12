@@ -50,6 +50,13 @@ public class TestOrder {
             System.out.println(order);
         }
 
+        // Test the remove part
+        repository.remove(2);
+        System.out.println("After remove");
+
+        for (Order order : repository.getOrders()) {
+            System.out.println(order);
+        }
 
 
 

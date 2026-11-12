@@ -23,6 +23,12 @@ public class Order {
         this.sandwichOrders = new SandwichOrder[2];
     }
 
+    public Order(int id,
+                 String remarks) {
+        this.id = id;
+        this.remarks = remarks;
+    }
+
     public void addSandwich(SandwichOrder sandwichOrder) {
         for (int i = 0; i < sandwichOrders.length; i++) {
             if (sandwichOrders[i] == null) {

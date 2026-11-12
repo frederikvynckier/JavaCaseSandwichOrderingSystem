@@ -3,6 +3,9 @@ package be.abis.sos.repository;
 import be.abis.sos.model.Order;
 import be.abis.sos.model.Session;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,21 +19,26 @@ public class OrderRepository {
    }
 
    public void add(Order order) {
+
        orders.add(order);
+       writeToFile();
    }
 
-   public void update(Order order) {
+   public void update(Order updatedOrder) {
        for (int i = 0; i < orders.size(); i++) {
-           if (orders.get(i).getId() == order.getId())
+           if (orders.get(i).getId() == updatedOrder.getId())
            {
-               orders.set(i, order);
+               orders.set(i, updatedOrder);
+               writeToFile();
                return;
            }
        }
    }
 
-   public void remove(Order order) {
-       orders.remove(order);
+   public void remove(int id)
+   {
+       orders.removeIf(order -> order.getId() == id);
+       writeToFile();
    }
 
     public List<Order> getListForDate(LocalDate date) {
@@ -62,5 +70,19 @@ public class OrderRepository {
 
     public List<Order> getOrders() {
         return orders;
+    }
+
+    private void writeToFile() {
+       try (PrintWriter writer = new PrintWriter(new FileWriter("orders.txt")) )
+       {
+           for (Order order : orders) {
+               writer.println(order);
+           }
+       }
+       catch (IOException e)
+       {
+           System.out.println("Error writing to file");
+           e.printStackTrace();
+       }
     }
 }
