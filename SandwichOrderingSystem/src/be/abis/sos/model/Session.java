@@ -7,6 +7,10 @@ public class Session {
     private LocalDate startDate;
     private LocalDate endDate;
 
+    public Session(String name) {
+        this(name, LocalDate.now(), LocalDate.now());
+    }
+
     public Session(String name, LocalDate startDate, LocalDate endDate) {
         this.name = name;
         this.startDate = startDate;
